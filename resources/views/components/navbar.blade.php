@@ -70,6 +70,11 @@
                         <a class="nav-link" href="{{ route('lang.switch', 'en') }}" style="font-variant: small-caps;">en</a>
                     @endif
                 </li>
+                <li class="nav-item">
+                    <button id="darkModeToggle" class="nav-link btn btn-link p-0" style="background:none; border:none;">
+                        <span id="darkModeIcon" class="bi"></span>
+                    </button>
+                </li>
             </ul>
         </div>
     </div>
