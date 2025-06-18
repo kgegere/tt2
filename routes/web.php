@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/promote', [\App\Http\Controllers\UserController::class, 'promote'])->name('user.promote');
     Route::post('/user/demote', [\App\Http\Controllers\UserController::class, 'demote'])->name('user.demote');
     Route::get('/user/{id}', [\App\Http\Controllers\UserController::class, 'adminShow'])->name('user.admin.show');
+    Route::post('/user/{id}/admin-update', [\App\Http\Controllers\UserController::class, 'adminUpdate'])
+        ->name('user.admin.update')
+        ->middleware('can:viewAny,App\Models\User');
     Route::get('/listing/{listing}/edit', [\App\Http\Controllers\ListingController::class, 'edit'])->name('listing.edit');
     Route::put('/listing/{listing}', [\App\Http\Controllers\ListingController::class, 'update'])->name('listing.update');
     Route::delete('/listing/{listing}', [\App\Http\Controllers\ListingController::class, 'destroy'])->name('listing.destroy');

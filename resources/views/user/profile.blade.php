@@ -27,7 +27,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('user.update') }}" class="mb-4">
+        <form method="POST" action="{{ (auth()->user()->isAdmin() && $user->id !== auth()->id()) ? route('user.admin.update', $user->id) : route('user.update') }}" class="mb-4">
             @csrf
             @if(auth()->user()->isAdmin())
                 <div class="mb-3">

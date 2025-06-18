@@ -74,6 +74,32 @@ class UserController extends Controller
         return view('user.profile', ['user' => $user]);
     }
 
+    public function adminUpdate(Request $request, $id)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403);
+        }
+
+        $user = \App\Models\User::findOrFail($id);
+
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'address' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        $user->update($data);
+
+        return back()->with('success', 'Profile updated!');
+    }
+
     public function index()
     {
         if (!Auth::user()->isAdmin()) {
